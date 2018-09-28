@@ -1,12 +1,12 @@
-// components/projects/AddProject.js
+// components/projects/AddTask.js
 
 import React, { Component } from "react";
 import axios from "axios";
 
-class AddProject extends Component {
+class AddTask extends Component {
   constructor(props) {
     super(props);
-    this.state = { title: "", description: "" };
+    this.state = { title: "", description: "", projectID: "" };
   }
 
   handleFormSubmit = event => {
@@ -14,11 +14,20 @@ class AddProject extends Component {
     // const {title, description} = this.state;
     const title = this.state.title;
     const description = this.state.description;
+    const projectID = this.props.projectID;
+
+    //console.log(this.props);
+    //console.log(this.state);
+
     axios
-      .post("http://localhost:5000/api/projects", { title, description })
+      .post("http://localhost:5000/api/tasks", {
+        title,
+        description,
+        projectID
+      })
       .then(() => {
-        this.props.getData();
-        this.setState({ title: "", description: "" });
+        this.props.getSingleProject();
+        this.setState({ title: "", description: "", projectID: "" });
       })
       .catch(error => console.log(error));
   };
@@ -57,4 +66,4 @@ class AddProject extends Component {
   }
 }
 
-export default AddProject;
+export default AddTask;
